@@ -32,7 +32,11 @@ jobs:
         run: |
           kubectl wait --for=condition=ready pod -l app=spring-app --timeout=120s
 
+      - name: Debug - check pod logs
+        run: |
+          kubectl logs -l app=spring-app --tail=100
+
       - name: Test endpoint
         run: |
-          kubectl port-forward service/spring-app 8080:8080 & sleep 15
-          curl --retry 5 --retry-delay 2 --fail http://localhost:8080 | grep "Hello from Docker"
+          kubectl port-forward service/spring-app 8080:8080 & sleep 30
+          curl --retry 10 --retry-delay 3 --fail http://localhost:8080 | grep "Hello from Docker"
