@@ -1,0 +1,34 @@
+name: Deploy to Minikube
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Start Minikube
+        uses: medyagh/setup-minikube@latest
+        with:
+          driver: docker
+
+      - name: Build image
+        run: |
+          eval $(minikube docker-env)
+          docker build -t spring-demo-app .
+
+      - name: Install Helm
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install my-app ./spring-boot-chart
+
+      - name: Test endpoint
+        run: |
+          kubectl port-forward service/spring-app 8080:8080 & sleep 10
+          curl http://localhost:8080 | grep "Hello from Docker"
