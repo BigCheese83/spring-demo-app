@@ -7,5 +7,5 @@ data:
     spring:
       jpa:
         hibernate:
-          ddl-auto: {{ .Values.spring.jpa.ddlAuto | default "update" }}
-        show-sql: {{ .Values.spring.jpa.showSql | default true }}
+          ddl-auto: update
+        show-sql: true
