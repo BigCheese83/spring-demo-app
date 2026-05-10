@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-config
+data:
+  application.yml: |
+    spring:
+      jpa:
+        hibernate:
+          ddl-auto: {{ .Values.spring.jpa.ddlAuto | default "update" }}
+        show-sql: {{ .Values.spring.jpa.showSql | default true }}
