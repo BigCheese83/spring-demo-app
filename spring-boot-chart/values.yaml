@@ -27,5 +27,5 @@ service:
   nodePort: 30080
 
 ingress:
-  enabled: false
+  enabled: true
   host: spring-demo.local

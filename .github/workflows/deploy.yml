@@ -15,6 +15,10 @@ jobs:
         with:
           driver: docker
 
+      - name: Install Prometheus CRDs
+        run: |
+          kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.90.1/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
+
       - name: Build image
         run: |
           eval $(minikube docker-env)
