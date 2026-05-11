@@ -8,3 +8,13 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus, metrics, info
+  prometheus:
+    metrics:
+      export:
+        enabled: true
